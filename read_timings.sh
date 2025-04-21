@@ -9,16 +9,7 @@ mkdir ${results}/timings
 # Make compact sequencing summary file containing just read ids and start times
 cut -f 5,10 ${seq_sum} |
 tail -n +2 \
-> ${results}/timings/seqsum_nohead_v1.txt
-
-cut -f 5,10 ${seq_sum2} |
-tail -n +2 \
->> ${results}/timings/seqsum_nohead_v1.txt
-
-sort -k 1 ${results}/timings/seqsum_nohead_v1.txt \
 > ${results}/timings/seqsum_nohead.txt
-
-rm ${results}/timings/seqsum_nohead_v1.txt
 
 echo -e "sample\trun\ttaxid\tread_id" > ${results}/timings/taxon_read_ids.txt
 

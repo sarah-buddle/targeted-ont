@@ -11,11 +11,13 @@ for sample in ${samples[@]}; do
     mkdir ${results}/taxprofiler
     mkdir ${results}/taxprofiler/samplesheets
 
+    # Create samplesheet
     echo -e "sample,run_accession,instrument_platform,fastq_1,fastq_2,fasta" > ${results}/taxprofiler/samplesheets/samplesheet_${run}_test1.csv
 
     echo -e $sample","$run",OXFORD_NANOPORE,"$results"/"$model"/trim/"$sample"_"$run".fq.gz,," \
     >> ${results}/taxprofiler/samplesheets/samplesheet_${run}_test1.csv
 
+    # Run preprocessing steps of taxprofiler - host removal
     nextflow run nf-core/taxprofiler -r dev -profile conda -w ${results}/work --max_cpus 1 \
     -c ${software}/nf-core-configs/custom_resources.conf \
     --input ${results}/taxprofiler/samplesheets/samplesheet_${run}_test1.csv \

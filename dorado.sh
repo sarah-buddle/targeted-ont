@@ -14,8 +14,8 @@ $dorado basecaller sup $data \
 --min-qscore 10 \
 --no-trim
 
-#model=HAC_v0.9.0
-model=SUP_v0.9.0
+model=HAC_v0.9.0
+#model=SUP_v0.9.0
 
 mkdir ${results}/${model}/demux ${results}/${model}/trim ${results}/${model}/demux_singleend
 

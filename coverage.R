@@ -2,6 +2,7 @@
 
 library(tidyverse)
 
+# Import combined files from samtools coverage
 twist_ont_1fc <- read.delim("coverage_twist_ont_1fc.txt", strip.white = TRUE,
                    header = FALSE,
                    col.names = c("sample", "run", "species", "rname",
@@ -14,8 +15,10 @@ ont_1fc <- read.delim("coverage_ont_1fc.txt", strip.white = TRUE,
                    header = FALSE) %>%
   mutate(run = "nanopore_270923")
 
+# Sample info
 samples <- read.csv("samples.csv")
 
+# Levels and labels
 run_levels <- c("twist_ont_251124", "nanopore_270923")
 
 run_labels <- c( "ONT + Twist CVRP", "Untargeted ONT")
@@ -76,6 +79,7 @@ format_labels <- function(l) {
 
 format_labels <- Vectorize(format_labels)
 
+# Combine and clean data
 coverage <- rbind(twist_ont_1fc, ont_1fc) %>%
   left_join(samples) %>%
   filter(!is.na(dnarna)) %>%
@@ -102,6 +106,7 @@ coverage <- rbind(twist_ont_1fc, ont_1fc) %>%
   unite(basecall_demux, basecall, demux, sep = "_", remove = FALSE) %>%
   mutate(basecall_demux = factor(basecall_demux, demux_levels, demux_labels))
 
+# Plot coverage
 coverage %>%
   filter(dilution != 0) %>%
   filter(demux %in% c("dualend") & basecall %in% c("HAC_v0.9.0")) %>%

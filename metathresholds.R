@@ -1,4 +1,4 @@
-## Run filtering on taxonomic classfier outputs ##
+## Run filtering using metathresholds on taxonomic classifier outputs ##
 
 devtools::load_all()
 
@@ -21,6 +21,5 @@ full_report_withinfo <- combined_dnarna_report_thres %>%
   dplyr::mutate(sample = ifelse(grepl("hours", sample), str_extract(sample, "(.*?)_[^_]*"), sample)) %>%
   dplyr::left_join(samples)
 
-
-write.csv(full_report_withinfo, "metathreholds.csv",
+write.csv(full_report_withinfo, "metathresholds.csv",
           quote = FALSE, row.names = FALSE)

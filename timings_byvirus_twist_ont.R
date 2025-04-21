@@ -3,8 +3,10 @@
 library(tidyverse)
 library(lubridate)
 
+# Sample data
 samples <- read.csv("samples.csv")
 
+# Levels and labels
 run_levels <- c("twist_ont_251124", "twist_ont_18251124")
 
 run_labels <- c("1 flow cell", "2 flow cells")
@@ -34,6 +36,7 @@ viral_reads_all <- data.frame()
 
 for (run in c("twist_ont_18251124", "twist_ont_251124")) {
 
+  # Read in coverage/timings data
   run_table <- read.delim(paste0(indir, run, "/timings/coverage_timings.txt"), sep = " ", header = FALSE,
                      col.names = c("read_id", "sample", "run", "species", "read_number", "read_length", "rname",
                                    "startpos", "endpos", "numreads", "covbases", "coverage", "meandepth", "meanbaseq", "meanmapq", "start_time")) %>%
@@ -42,6 +45,7 @@ for (run in c("twist_ont_18251124", "twist_ont_251124")) {
     mutate(read_length = as.numeric(read_length)) %>%
     mutate(sample = paste0(sample, "_all"))
 
+  # Format and calculate cumulative frequency
   viral_reads <- run_table %>%
     dplyr::mutate(across(where(is.character), str_trim)) %>%
     dplyr::filter(!grepl("unclassified", sample)) %>%

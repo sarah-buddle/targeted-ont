@@ -8,13 +8,17 @@ time=all
 
 for sample in ${samples[@]}; do
 
+    # Rename dorado output
     mv ${results}/${model}/${filetype}/*_${kit}_${sample}.fastq \
     ${results}/${model}/${filetype}/${sample}_all_${run}.fq
 
+    # File containing read lengths
     zcat ${results}/${model}/${filetype}/${sample}_${time}_${run}.fq.gz |
     awk  'NR%4==2 {print length}' | 
     sort -nr \
     > ${results}/lengths/${sample}_${time}_${run}_lengths.txt
+
+    ## Calculate stats ##
 
     N_READS=$(wc -l ${results}/lengths/${sample}_${time}_${run}_lengths.txt | awk '{print $1}')
 
@@ -46,6 +50,7 @@ for sample in ${samples[@]}; do
         fi
     done < ${results}/lengths/${sample}_${time}_${run}_lengths.txt
 
+    # Write outputs to file
     echo -e $sample"_"$time","$run","$model","$filetype","$N_READS","$TOTAL_LENGTH","$N50","$Q1","$MEDIAN","$Q3 \
     >> ${results}/counts.csv
 

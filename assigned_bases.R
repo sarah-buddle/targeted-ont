@@ -66,6 +66,7 @@ samples <- read.csv("samples.csv")
 
 #### BPM plot ####
 
+# Import numbers and counts of reads aligned to viral genomes
 twist_ont_1fc <- read.delim("all_minimap_twist_ont_1fc.txt",
                      sep = "\t", row.names = NULL,
                    header = FALSE, col.names = c("tool", "run", "sample", "species", "reads", "bases")) %>% 

@@ -1,5 +1,6 @@
 ### Basecall and demultiplex untargeted ONT data ###
 
+# Basecall (no demultiplexing)
 $dorado basecaller hac $data \
 --emit-fastq \
 -o ${results}/basecall/HAC_v0.9.0/${dnarna} \
@@ -8,6 +9,7 @@ $dorado basecaller hac $data \
 
 kit=SQK-RPB114-24
 
+# Demultiplex (with trimming)
 mkdir ${results}/HAC_v0.9.0/DNA/demux ${results}/HAC_v0.9.0/RNA/demux
 
 $dorado demux ${results}/HAC_v0.9.0/${dnarna}/basecall/${filename}.fastq \
